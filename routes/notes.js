@@ -5,9 +5,12 @@ const fetchuser = require("../middleware/fetchUser");
 const { body, validationResult } = require("express-validator");
 
 // ROUTE 1: Getting all the notes using: POST "/api/notes/fetchNotes". Login required
-router.get("/fetchNotes", fetchuser, async (req, res) => {
+router.post("/fetchNotes", fetchuser, async (req, res) => {
   try {
     const notes = await Notes.find({ userId: req.user.id });
+    // if (!notes) {
+    //   res.status(404).send("No notes found");
+    // }
     res.json(notes);
   } catch (err) {
     console.error(err.message);
